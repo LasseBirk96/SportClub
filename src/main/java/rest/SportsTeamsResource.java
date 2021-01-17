@@ -43,12 +43,14 @@ public class SportsTeamsResource {
        
         try {
            
-           JsonObject json = JsonParser.parseString(jsonString).getAsJsonObject();
+           JsonObject json = new JsonObject();
            String teamName = json.get("teamName").getAsString();
            int minAge = json.get("minAge").getAsInt();
            int maxAge = json.get("maxAge").getAsInt();
            double price =json.get("price").getAsDouble();
            Long id = json.get("id").getAsLong();
+           
+           
 
            
            SportsTeam team = SPORTSTEAM_FACADE.addSportsTeam(teamName, minAge,maxAge, price, id);
@@ -137,8 +139,8 @@ public class SportsTeamsResource {
     @Path("all")
     @GET
     @Produces({MediaType.APPLICATION_JSON})
-    public List<SportsTeam> getAllTeams() {
-        List<SportsTeam> allTeams = SPORTSTEAM_FACADE.getAllTeams();
+    public SportsTeam getAllTeams() {
+        SportsTeam allTeams = SPORTSTEAM_FACADE.getAllTeams();
         return allTeams;
     }
     
@@ -147,8 +149,8 @@ public class SportsTeamsResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Path("amount")
     public String amountTeams() {
-        String userAmount = SPORTSTEAM_FACADE.getAmountOfTeams();
-        return userAmount;
+        String amountOfTeams = SPORTSTEAM_FACADE.getAmountOfTeams();
+        return amountOfTeams;
     }
     
     
