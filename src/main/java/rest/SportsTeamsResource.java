@@ -134,7 +134,7 @@ public class SportsTeamsResource {
     
     
     @Path("addSportToTeam")
-    @PUT
+    @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response addSport(String jsonString) throws AuthenticationException, API_Exception {
