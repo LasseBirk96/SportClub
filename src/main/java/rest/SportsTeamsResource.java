@@ -139,8 +139,8 @@ public class SportsTeamsResource {
     @Path("all")
     @GET
     @Produces({MediaType.APPLICATION_JSON})
-    public SportsTeam getAllTeams() {
-        SportsTeam allTeams = SPORTSTEAM_FACADE.getAllTeams();
+    public List<SportsTeam> getAllTeams() {
+        List<SportsTeam> allTeams = SPORTSTEAM_FACADE.getAllTeams();
         return allTeams;
     }
     
