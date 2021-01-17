@@ -1,6 +1,6 @@
 package rest;
 
-import entities.Role;
+import entities.Sport;
 import facades.RoleFacade;
 import java.util.List;
 import javax.persistence.EntityManagerFactory;
@@ -28,8 +28,8 @@ public class RoleResource {
     
     @GET
     @Produces({MediaType.APPLICATION_JSON})
-    public List<Role> getAllRoles() {
-        List<Role> allRoles = Role_FACADE.getAllRoles();
+    public List<Sport> getAllRoles() {
+        List<Sport> allRoles = Role_FACADE.getAllRoles();
         return allRoles;
     }
     

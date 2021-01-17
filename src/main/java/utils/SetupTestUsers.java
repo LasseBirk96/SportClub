@@ -1,8 +1,8 @@
 package utils;
 
-
-import entities.Role;
-import entities.User;
+/*
+import entities.Sport;
+import entities.SportsTeam;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -16,9 +16,9 @@ public class SetupTestUsers {
     
   
 
-    User user = new User("user", "test1","email");
-    User admin = new User("admin", "test1","email");
-    User both = new User("user_admin", "test1","email");
+    SportsTeam user = new SportsTeam("user", "test1","email");
+    SportsTeam admin = new SportsTeam("admin", "test1","email");
+    SportsTeam both = new SportsTeam("user_admin", "test1","email");
 
     if(admin.getUserPass().equals("test")||user.getUserPass().equals("test")||both.getUserPass().equals("test"))
       throw new UnsupportedOperationException("You have not changed the passwords");
@@ -26,8 +26,8 @@ public class SetupTestUsers {
     em.getTransaction().begin();
     //em.createQuery("DELETE FROM Role").executeUpdate();
     //em.createQuery("DELETE FROM User").executeUpdate();
-    Role userRole = new Role("user");
-    Role adminRole = new Role("admin");
+    Sport userRole = new Sport("user");
+    Sport adminRole = new Sport("admin");
     user.addRole(userRole);
     admin.addRole(adminRole);
     both.addRole(userRole);
@@ -45,4 +45,7 @@ public class SetupTestUsers {
    
   }
 
+
+
 }
+*/

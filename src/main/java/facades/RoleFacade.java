@@ -1,7 +1,7 @@
 package facades;
 
-import entities.Role;
-import entities.User;
+import entities.Sport;
+import entities.SportsTeam;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -26,10 +26,10 @@ public class RoleFacade {
         return instance;
     }
  
-    public List<Role> getAllRoles() {
+    public List<Sport> getAllRoles() {
         EntityManager em = emf.createEntityManager();
         try {
-            List<Role> allRoles = em.createQuery("SELECT u.roleName from Role u", Role.class)
+            List<Sport> allRoles = em.createQuery("SELECT u.roleName from Role u", Sport.class)
             .getResultList();
             return allRoles;
         } finally {

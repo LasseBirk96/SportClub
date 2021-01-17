@@ -1,7 +1,7 @@
 package rest;
-
-import entities.User;
-import entities.Role;
+/*
+import entities.SportsTeam;
+import entities.Sport;
 
 import io.restassured.RestAssured;
 import static io.restassured.RestAssured.given;
@@ -69,13 +69,13 @@ public class LoginEndpointTest {
             em.createQuery("delete from User").executeUpdate();
             em.createQuery("delete from Role").executeUpdate();
 
-            Role userRole = new Role("user");
-            Role adminRole = new Role("admin");
-            User user = new User("user", "test","email");
+            Sport userRole = new Sport("user");
+            Sport adminRole = new Sport("admin");
+            SportsTeam user = new SportsTeam("user", "test","email");
             user.addRole(userRole);
-            User admin = new User("admin", "test","email");
+            SportsTeam admin = new SportsTeam("admin", "test","email");
             admin.addRole(adminRole);
-            User both = new User("user_admin", "test","email");
+            SportsTeam both = new SportsTeam("user_admin", "test","email");
             both.addRole(userRole);
             both.addRole(adminRole);
             em.persist(userRole);
@@ -222,3 +222,4 @@ public class LoginEndpointTest {
     }
 
 }
+*/

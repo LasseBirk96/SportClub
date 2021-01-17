@@ -3,8 +3,8 @@ package rest;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import entities.Role;
-import entities.User;
+import entities.Sport;
+import entities.SportsTeam;
 import errorhandling.API_Exception;
 import facades.UserFacade;
 import java.util.List;
@@ -39,25 +39,31 @@ public class UserResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response addUser(String jsonString) throws AuthenticationException, API_Exception {
-        String username;
-        String password;
-        String email;
+    public Response addSportsTeam(String jsonString) throws AuthenticationException, API_Exception {
+       
         try {
+           
             JsonObject json = JsonParser.parseString(jsonString).getAsJsonObject();
-            username = json.get("username").getAsString();
-            password = json.get("password").getAsString();
-            email = json.get("email").getAsString();
+           String teamName = json.get("teamName").getAsString();
+           int minAge = json.get("minAge").getAsInt();
+           int maxAge = json.get("maxAge").getAsInt();
+           double price =json.get("price").getAsDouble();
+           
+           
+          SportsTeam team = USER_FACADE.addSportsTeam(teamName, minAge,maxAge, price);
+          
+          
+        JsonObject responseJson = new JsonObject();
+        responseJson.addProperty("teamName", teamName);
+        responseJson.addProperty("msg", "Welcome on board!");
+        return Response.ok(new Gson().toJson(responseJson)).build();
+        
         } catch (Exception e) {
             throw new API_Exception("Malformed JSON Suplied", 400, e);
         }
 
-        User user = USER_FACADE.addUser(username, password, email);
-        JsonObject responseJson = new JsonObject();
-        responseJson.addProperty("username", username);
-        responseJson.addProperty("msg", "Welcome on board!");
-
-        return Response.ok(new Gson().toJson(responseJson)).build();
+        
+       
 
     }
     
@@ -68,21 +74,21 @@ public class UserResource {
         
         try {
             JsonObject json = JsonParser.parseString(jsonString).getAsJsonObject();
-            Long userId = json.get("id").getAsLong();
-            User user = USER_FACADE.findUser(userId);
-            
+            Long sportsTeamId = json.get("id").getAsLong();
+            SportsTeam team = USER_FACADE.findSportsTeam(sportsTeamId);
+            /*
             if (json.has("email")) {
-                user.setEmail(json.get("email").getAsString());
+                team.setEmail(json.get("email").getAsString());
             }
             
             if (json.has("username")) {
-                user.setUserName(json.get("username").getAsString());
+                team.setUserName(json.get("username").getAsString());
             }
             
             USER_FACADE.updateUser(user);
-                    
+                   */ 
             JsonObject responseJson = new JsonObject();
-            responseJson.addProperty("message", String.format("Successfully updated user %d", userId));
+            responseJson.addProperty("message", String.format("Successfully updated user %d", sportsTeamId));
             return Response.ok(new Gson().toJson(responseJson)).build();
         }
         catch (Exception e) {
@@ -106,7 +112,7 @@ public class UserResource {
         try {
             JsonObject json = JsonParser.parseString(jsonString).getAsJsonObject();
             Long userId = json.get("id").getAsLong();
-            User user = USER_FACADE.deleteUser(userId);
+            SportsTeam user = USER_FACADE.deleteUser(userId);
             JsonObject responseJson = new JsonObject();
             responseJson.addProperty("message", String.format("Successfully deleted user %d", userId));
             return Response.ok(new Gson().toJson(responseJson)).build();
@@ -119,8 +125,8 @@ public class UserResource {
     @Path("all")
     @GET
     @Produces({MediaType.APPLICATION_JSON})
-    public List<User> getAllUsers() {
-        List<User> allUsers = USER_FACADE.getAllUsers();
+    public List<SportsTeam> getAllUsers() {
+        List<SportsTeam> allUsers = USER_FACADE.getAllUsers();
         return allUsers;
     }
     

@@ -1,7 +1,7 @@
 package facades;
 
-import entities.Role;
-import entities.User;
+import entities.Sport;
+import entities.SportsTeam;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -28,57 +28,42 @@ public class UserFacade {
 
  
     
-       public User getVeryfiedUser(String username, String password) throws AuthenticationException {
-        EntityManager em = emf.createEntityManager();
-   
-        try {
-            
-            em.getTransaction().begin();
-            TypedQuery<User> query = em.createQuery("SELECT u FROM User u WHERE u.userName = :username", User.class);
-            query.setParameter("username", username);
-            User user = query.getSingleResult();
-            user.verifyPassword(password);
-            return user;
-            } finally {
-                em.close();
-            }
-          
-        }
     
-    
-    public User findUser(Long id) {
+    public SportsTeam findSportsTeam(Long id) {
         EntityManager em = emf.createEntityManager();
         
         try {
             em.getTransaction().begin();
-            TypedQuery<User> query = em.createQuery("SELECT u FROM User u WHERE u.id = :id ", User.class);
+            TypedQuery<SportsTeam> query = em.createQuery("SELECT u FROM SportsTeam u WHERE u.id = :id ", SportsTeam.class);
             query.setParameter("id", id);
-            User user = query.getSingleResult();
+            SportsTeam team = query.getSingleResult();
             
-            return user;
+            return team;
         } 
         finally {
             em.close();
         }
     }
+    
+    
 
-    public User addUser(String name, String password, String email) throws AuthenticationException {
+    public SportsTeam addSportsTeam(String teamName, int minAge, int maxAge, double price) throws AuthenticationException {
         EntityManager em = emf.createEntityManager();
-        User user;
+        SportsTeam team;
         try {
-                user = new User(name, password, email);
-                user.addRole(em.find(Role.class, "user"));
+                team = new SportsTeam(teamName, minAge, maxAge, price);
+                
                 em.getTransaction().begin();
-                em.persist(user);
+                em.persist(team);
                 em.getTransaction().commit();
             
         } finally {
             em.close();
         }
-        return user;
+        return team;
     }
     
-    public User updateUser(User user) {
+    public SportsTeam updateUser(SportsTeam user) {
         EntityManager em = emf.createEntityManager();
         
         try {
@@ -94,13 +79,13 @@ public class UserFacade {
     }
     
     
-    public User deleteUser(Long userId) {
+    public SportsTeam deleteUser(Long userId) {
         EntityManager em = emf.createEntityManager();
         try {
             em.getTransaction().begin();
-            TypedQuery<User> query = em.createQuery("SELECT u FROM User u WHERE u.id = :id ", User.class);
+            TypedQuery<SportsTeam> query = em.createQuery("SELECT u FROM User u WHERE u.id = :id ", SportsTeam.class);
             query.setParameter("id", userId);
-            User p = query.getSingleResult();
+            SportsTeam p = query.getSingleResult();
             em.remove(p);
             em.getTransaction().commit();
             return p; 
@@ -111,10 +96,10 @@ public class UserFacade {
         
     }
      
-    public List<User> getAllUsers() {
+    public List<SportsTeam> getAllUsers() {
         EntityManager em = emf.createEntityManager();
         try {
-            List<User> allUsers = em.createQuery("SELECT u.userName from User u", User.class)
+            List<SportsTeam> allUsers = em.createQuery("SELECT u.userName from User u", SportsTeam.class)
             .getResultList();
             return allUsers;
         } finally {
@@ -127,8 +112,8 @@ public class UserFacade {
     public String getUserAmount() {
        EntityManager em = emf.createEntityManager();;
         try {
-            TypedQuery<User> query = em.createQuery ("select u from User u",entities.User.class);
-            List<User> users = query.getResultList();
+            TypedQuery<SportsTeam> query = em.createQuery ("select u from User u",entities.SportsTeam.class);
+            List<SportsTeam> users = query.getResultList();
             return "[" + users.size() + "]";
         } finally {
             em.close();
