@@ -45,52 +45,27 @@ public class SportsTeamFacade {
         }
     }
     
-    public SportsTeam addSportToTeam(String sname, String name) {
-        EntityManager em = emf.createEntityManager();
-        
-        try{
-           em.getTransaction().begin();
-           
-                   
-        TypedQuery<Sport> otherQuery = em.createQuery("SELECT s FROM Sport s WHERE s.sportName = :sname", Sport.class);
-        otherQuery.setParameter("sname", sname);
-        Sport sport = otherQuery.getSingleResult();
 
-        TypedQuery<SportsTeam> query = em.createQuery("SELECT u FROM SportsTeam u WHERE u.teamName = :name", SportsTeam.class);
-        query.setParameter("name", name);
-        SportsTeam team = query.getSingleResult();
-
-        
-        team.addSport(sport);
-                em.persist(team);
-        em.getTransaction().commit();
-        
-        return team;
-          
-        }
-        finally {
-            em.close();
-        }
-  
-    }
     
     
 
-    public SportsTeam addSportsTeam(String teamName, int minAge, int maxAge, double price) throws AuthenticationException {
+    public SportsTeam addSportsTeam(String teamName, int minAge, int maxAge, double price, Long id) throws AuthenticationException {
         EntityManager em = emf.createEntityManager();
-        
+        SportsTeam team;
         try {
-          SportsTeam team = new SportsTeam(teamName, minAge, maxAge, price);
-         
+            team = new SportsTeam(teamName, minAge, maxAge, price);
+           TypedQuery<Sport> query = em.createQuery("SELECT u FROM Sport u WHERE u.id = :id ", Sport.class);
+            query.setParameter("id", id);
+            Sport sport = query.getSingleResult();
+            team.addSport(sport);
                 em.getTransaction().begin();
                 em.persist(team);
                 em.getTransaction().commit();
-                  return team;
             
         } finally {
             em.close();
         }
-      
+        return team;
     }
     
     public SportsTeam updateTeam(SportsTeam team) {
