@@ -27,8 +27,6 @@ import org.mindrot.jbcrypt.BCrypt;
 @Table(name = "teams")
 public class SportsTeam implements Serializable {
     
-    
-    
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -129,7 +127,9 @@ public class SportsTeam implements Serializable {
         this.sportList = sportList;
     }
     
-    
+    public void addSport(Sport sport) {
+        sportList.add(sport);
+    }
     
     
 

@@ -49,6 +49,8 @@ public class UserResource {
            int maxAge = json.get("maxAge").getAsInt();
            double price =json.get("price").getAsDouble();
            
+         
+           
            
           SportsTeam team = USER_FACADE.addSportsTeam(teamName, minAge,maxAge, price);
           

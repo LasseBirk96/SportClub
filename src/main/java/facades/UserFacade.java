@@ -52,6 +52,7 @@ public class UserFacade {
         SportsTeam team;
         try {
                 team = new SportsTeam(teamName, minAge, maxAge, price);
+                team.addSport(em.find(Sport.class, "Basketball"));
                 em.getTransaction().begin();
                 em.persist(team);
                 em.getTransaction().commit();
