@@ -22,7 +22,7 @@ import javax.ws.rs.core.Response;
 import security.errorhandling.AuthenticationException;
 import utils.EMF_Creator;
 
-@Path("user")
+@Path("team")
 public class UserResource {
 
     public static final int TOKEN_EXPIRE_TIME = 1000 * 60 * 30; //30 min
@@ -43,7 +43,7 @@ public class UserResource {
        
         try {
            
-            JsonObject json = JsonParser.parseString(jsonString).getAsJsonObject();
+           JsonObject json = JsonParser.parseString(jsonString).getAsJsonObject();
            String teamName = json.get("teamName").getAsString();
            int minAge = json.get("minAge").getAsInt();
            int maxAge = json.get("maxAge").getAsInt();
