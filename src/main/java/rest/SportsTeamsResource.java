@@ -48,10 +48,9 @@ public class SportsTeamsResource {
            int minAge = json.get("minAge").getAsInt();
            int maxAge = json.get("maxAge").getAsInt();
            double price =json.get("price").getAsDouble();
-           Long id =json.get("id").getAsLong();
-       
+
            
-           SportsTeam team = SPORTSTEAM_FACADE.addSportsTeam(teamName, minAge,maxAge, price, id);
+           SportsTeam team = SPORTSTEAM_FACADE.addSportsTeam(teamName, minAge,maxAge, price);
           
 
             JsonObject responseJson = new JsonObject();
@@ -118,14 +117,35 @@ public class SportsTeamsResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response removeUser(String jsonString) throws AuthenticationException, API_Exception {
+    public Response removeSportsTeam(String jsonString) throws AuthenticationException, API_Exception {
         
         try {
             JsonObject json = JsonParser.parseString(jsonString).getAsJsonObject();
             Long teamId = json.get("id").getAsLong();
             SportsTeam user = SPORTSTEAM_FACADE.deleteTeam(teamId);
             JsonObject responseJson = new JsonObject();
-            responseJson.addProperty("message", String.format("Successfully deleted user %d", teamId));
+            responseJson.addProperty("message", String.format("Successfully deleted team %d", teamId));
+            return Response.ok(new Gson().toJson(responseJson)).build();
+        }
+        catch (Exception e) {
+            return Response.status(400, "Malformed JSON supplied").build();
+        }
+    }
+    
+    
+      @Path("addTeam")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response addSport(String jsonString) throws AuthenticationException, API_Exception {
+        
+        try {
+            JsonObject json = JsonParser.parseString(jsonString).getAsJsonObject();
+            String sname = json.get("sname").getAsString();
+            String name = json.get("name").getAsString();
+            SportsTeam user = SPORTSTEAM_FACADE.addSportToTeam(sname, name);
+            JsonObject responseJson = new JsonObject();
+            responseJson.addProperty("message", String.format("Successfully added sport to %d"));
             return Response.ok(new Gson().toJson(responseJson)).build();
         }
         catch (Exception e) {

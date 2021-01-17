@@ -45,17 +45,41 @@ public class SportsTeamFacade {
         }
     }
     
+    public SportsTeam addSportToTeam(String sname, String name) {
+        EntityManager em = emf.createEntityManager();
+        
+        try{
+            
+        TypedQuery<SportsTeam> query = em.createQuery("SELECT u FROM SportsTeam u WHERE u.teamName = :name", SportsTeam.class);
+        query.setParameter("name", name);
+        SportsTeam team = query.getSingleResult();
+        
+        TypedQuery<Sport> otherQuery = em.createQuery("SELECT s FROM Sport s WHERE s.sportName = :sname", Sport.class);
+        query.setParameter("sname", sname);
+        Sport sport = otherQuery.getSingleResult();
+        
+        team.addSport(sport);
+        em.getTransaction().begin();
+                em.merge(team);
+        em.getTransaction().commit();
+        
+        return team;
+          
+        }
+        finally {
+            em.close();
+        }
+  
+    }
+    
     
 
-    public SportsTeam addSportsTeam(String teamName, int minAge, int maxAge, double price, Long id) throws AuthenticationException {
+    public SportsTeam addSportsTeam(String teamName, int minAge, int maxAge, double price) throws AuthenticationException {
         EntityManager em = emf.createEntityManager();
         SportsTeam team;
         try {
             team = new SportsTeam(teamName, minAge, maxAge, price);
-           TypedQuery<Sport> query = em.createQuery("SELECT u FROM Sport u WHERE u.id = :id ", Sport.class);
-            query.setParameter("id", id);
-            Sport sport = query.getSingleResult();
-            team.addSport(sport);
+         
                 em.getTransaction().begin();
                 em.persist(team);
                 em.getTransaction().commit();
