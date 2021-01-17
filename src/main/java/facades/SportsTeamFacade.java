@@ -114,6 +114,8 @@ public class SportsTeamFacade {
     }
     
     
+    /*
+    
     public List<SportsTeam> getAlternativeTeams(){
           EntityManager em = emf.createEntityManager();
           try{
@@ -125,8 +127,8 @@ public class SportsTeamFacade {
           }
            
     
-    }
-    
+    } Prøvede at hente holds sportsgrene
+    */
     
     
     
