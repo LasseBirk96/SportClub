@@ -49,7 +49,8 @@ public class SportsTeamFacade {
         EntityManager em = emf.createEntityManager();
         
         try{
-            
+           em.getTransaction().begin();
+
         TypedQuery<SportsTeam> query = em.createQuery("SELECT u FROM SportsTeam u WHERE u.teamName = :name", SportsTeam.class);
         query.setParameter("name", name);
         SportsTeam team = query.getSingleResult();
@@ -59,7 +60,6 @@ public class SportsTeamFacade {
         Sport sport = otherQuery.getSingleResult();
         
         team.addSport(sport);
-        em.getTransaction().begin();
                 em.merge(team);
         em.getTransaction().commit();
         

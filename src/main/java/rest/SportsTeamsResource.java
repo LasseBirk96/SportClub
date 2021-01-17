@@ -133,7 +133,7 @@ public class SportsTeamsResource {
     }
     
     
-      @Path("addTeam")
+    @Path("addSportToTeam")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
