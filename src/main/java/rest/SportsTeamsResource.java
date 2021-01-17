@@ -43,7 +43,7 @@ public class SportsTeamsResource {
        
         try {
            
-           JsonObject json = new JsonObject();
+           JsonObject json = JsonParser.parseString(jsonString).getAsJsonObject();
            String teamName = json.get("teamName").getAsString();
            int minAge = json.get("minAge").getAsInt();
            int maxAge = json.get("maxAge").getAsInt();
