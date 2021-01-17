@@ -50,14 +50,16 @@ public class SportsTeamFacade {
         
         try{
            em.getTransaction().begin();
+           
+                   
+        TypedQuery<Sport> otherQuery = em.createQuery("SELECT s FROM Sport s WHERE s.sportName = :sname", Sport.class);
+        otherQuery.setParameter("sname", sname);
+        Sport sport = otherQuery.getSingleResult();
 
         TypedQuery<SportsTeam> query = em.createQuery("SELECT u FROM SportsTeam u WHERE u.teamName = :name", SportsTeam.class);
         query.setParameter("name", name);
         SportsTeam team = query.getSingleResult();
-        
-        TypedQuery<Sport> otherQuery = em.createQuery("SELECT s FROM Sport s WHERE s.sportName = :sname", Sport.class);
-        query.setParameter("sname", sname);
-        Sport sport = otherQuery.getSingleResult();
+
         
         team.addSport(sport);
                 em.persist(team);

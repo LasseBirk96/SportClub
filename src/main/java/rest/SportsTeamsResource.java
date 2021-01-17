@@ -145,7 +145,7 @@ public class SportsTeamsResource {
             String name = json.get("name").getAsString();
             SportsTeam user = SPORTSTEAM_FACADE.addSportToTeam(sname, name);
             JsonObject responseJson = new JsonObject();
-            responseJson.addProperty("message", String.format("Successfully added sport to %d"));
+            responseJson.addProperty("message", String.format("Successfully added sport to %d", sname));
             return Response.ok(new Gson().toJson(responseJson)).build();
         }
         catch (Exception e) {
