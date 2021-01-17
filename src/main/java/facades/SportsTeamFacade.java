@@ -76,18 +76,19 @@ public class SportsTeamFacade {
 
     public SportsTeam addSportsTeam(String teamName, int minAge, int maxAge, double price) throws AuthenticationException {
         EntityManager em = emf.createEntityManager();
-        SportsTeam team;
+        
         try {
-            team = new SportsTeam(teamName, minAge, maxAge, price);
+          SportsTeam team = new SportsTeam(teamName, minAge, maxAge, price);
          
                 em.getTransaction().begin();
                 em.persist(team);
                 em.getTransaction().commit();
+                  return team;
             
         } finally {
             em.close();
         }
-        return team;
+      
     }
     
     public SportsTeam updateTeam(SportsTeam team) {
