@@ -55,7 +55,7 @@ public class SportsTeamFacade {
            TypedQuery<Sport> query = em.createQuery("SELECT u FROM Sport u WHERE u.id = :id ", Sport.class);
             query.setParameter("id", id);
             Sport sport = query.getSingleResult();
-            team.addSport(em.find(Sport.class, sport));
+            team.addSport(sport);
                 em.getTransaction().begin();
                 em.persist(team);
                 em.getTransaction().commit();
