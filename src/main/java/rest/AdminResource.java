@@ -7,7 +7,7 @@ import entities.Sport;
 import entities.SportsTeam;
 import errorhandling.API_Exception;
 import facades.AdminFacade;
-import facades.UserFacade;
+import facades.SportsTeamFacade;
 import java.util.List;
 import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.core.Context;
@@ -28,7 +28,7 @@ public class AdminResource {
 
     public static final int TOKEN_EXPIRE_TIME = 1000 * 60 * 30; //30 min
     private static final EntityManagerFactory EMF = EMF_Creator.createEntityManagerFactory();
-    public static final UserFacade USER_FACADE = UserFacade.getUserFacade(EMF);
+    public static final SportsTeamFacade USER_FACADE = SportsTeamFacade.getSportsTeamFacade(EMF);
     public static final AdminFacade ADMIN_FACADE = AdminFacade.getAdminFacade(EMF);
 
     @Context
@@ -114,7 +114,7 @@ public class AdminResource {
         try {
             JsonObject json = JsonParser.parseString(jsonString).getAsJsonObject();
             Long userId = json.get("id").getAsLong();
-            SportsTeam user = USER_FACADE.deleteUser(userId);
+            SportsTeam user = USER_FACADE.deleteTeam(userId);
             JsonObject responseJson = new JsonObject();
             responseJson.addProperty("message", String.format("Successfully deleted user %d", userId));
             return Response.ok(new Gson().toJson(responseJson)).build();
@@ -124,22 +124,7 @@ public class AdminResource {
         }
     }
     
-    @Path("all")
-    @GET
-    @Produces({MediaType.APPLICATION_JSON})
-    public List<SportsTeam> getAllUsers() {
-        List<SportsTeam> allUsers = USER_FACADE.getAllUsers();
-        return allUsers;
-    }
-    
-    
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    @Path("amount")
-    public String amountUsers() {
-        String userAmount = USER_FACADE.getUserAmount();
-        return userAmount;
-    }
+ 
     
     
     

@@ -6,7 +6,7 @@ import com.google.gson.JsonParser;
 import entities.Sport;
 import entities.SportsTeam;
 import errorhandling.API_Exception;
-import facades.UserFacade;
+import facades.SportsTeamFacade;
 import java.util.List;
 import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.core.Context;
@@ -27,7 +27,7 @@ public class UserResource {
 
     public static final int TOKEN_EXPIRE_TIME = 1000 * 60 * 30; //30 min
     private static final EntityManagerFactory EMF = EMF_Creator.createEntityManagerFactory();
-    public static final UserFacade USER_FACADE = UserFacade.getUserFacade(EMF);
+    public static final SportsTeamFacade SPORTSTEAM_FACADE = SportsTeamFacade.getSportsTeamFacade(EMF);
 
     @Context
     private UriInfo context;
@@ -53,7 +53,7 @@ public class UserResource {
          
            
            
-          SportsTeam team = USER_FACADE.addSportsTeam(teamName, minAge,maxAge, price);
+          SportsTeam team = SPORTSTEAM_FACADE.addSportsTeam(teamName, minAge,maxAge, price);
           
           
         JsonObject responseJson = new JsonObject();
@@ -78,7 +78,7 @@ public class UserResource {
         try {
             JsonObject json = JsonParser.parseString(jsonString).getAsJsonObject();
             Long sportsTeamId = json.get("id").getAsLong();
-            SportsTeam team = USER_FACADE.findSportsTeam(sportsTeamId);
+            SportsTeam team = SPORTSTEAM_FACADE.findSportsTeam(sportsTeamId);
             /*
             if (json.has("email")) {
                 team.setEmail(json.get("email").getAsString());
@@ -114,10 +114,10 @@ public class UserResource {
         
         try {
             JsonObject json = JsonParser.parseString(jsonString).getAsJsonObject();
-            Long userId = json.get("id").getAsLong();
-            SportsTeam user = USER_FACADE.deleteUser(userId);
+            Long teamId = json.get("id").getAsLong();
+            SportsTeam user = SPORTSTEAM_FACADE.deleteTeam(teamId);
             JsonObject responseJson = new JsonObject();
-            responseJson.addProperty("message", String.format("Successfully deleted user %d", userId));
+            responseJson.addProperty("message", String.format("Successfully deleted user %d", teamId));
             return Response.ok(new Gson().toJson(responseJson)).build();
         }
         catch (Exception e) {
@@ -128,17 +128,17 @@ public class UserResource {
     @Path("all")
     @GET
     @Produces({MediaType.APPLICATION_JSON})
-    public List<SportsTeam> getAllUsers() {
-        List<SportsTeam> allUsers = USER_FACADE.getAllUsers();
-        return allUsers;
+    public List<SportsTeam> getAllTeams() {
+        List<SportsTeam> allTeams = SPORTSTEAM_FACADE.getAllTeams();
+        return allTeams;
     }
     
     
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("amount")
-    public String amountUsers() {
-        String userAmount = USER_FACADE.getUserAmount();
+    public String amountTeams() {
+        String userAmount = SPORTSTEAM_FACADE.getAmountOfTeams();
         return userAmount;
     }
     

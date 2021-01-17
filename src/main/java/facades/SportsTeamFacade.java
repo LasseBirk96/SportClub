@@ -10,18 +10,18 @@ import security.errorhandling.AuthenticationException;
 import utils.EMF_Creator;
 
 
-public class UserFacade {
+public class SportsTeamFacade {
 
     private static EntityManagerFactory emf;
-    private static UserFacade instance;
+    private static SportsTeamFacade instance;
 
-    private UserFacade() {
+    private SportsTeamFacade() {
     }
 
-    public static UserFacade getUserFacade(EntityManagerFactory _emf) {
+    public static SportsTeamFacade getSportsTeamFacade(EntityManagerFactory _emf) {
         if (instance == null) {
             emf = _emf;
-            instance = new UserFacade();
+            instance = new SportsTeamFacade();
         }
         return instance;
     }
@@ -52,7 +52,6 @@ public class UserFacade {
         SportsTeam team;
         try {
                 team = new SportsTeam(teamName, minAge, maxAge, price);
-                team.addSport(em.find(Sport.class, "id"));
                 em.getTransaction().begin();
                 em.persist(team);
                 em.getTransaction().commit();
@@ -63,15 +62,15 @@ public class UserFacade {
         return team;
     }
     
-    public SportsTeam updateUser(SportsTeam user) {
+    public SportsTeam updateTeam(SportsTeam team) {
         EntityManager em = emf.createEntityManager();
         
         try {
             em.getTransaction().begin();
-            em.merge(user);
+            em.merge(team);
             em.getTransaction().commit();
             
-            return user;
+            return team;
         }
         finally {
             em.close();
@@ -79,12 +78,12 @@ public class UserFacade {
     }
     
     
-    public SportsTeam deleteUser(Long userId) {
+    public SportsTeam deleteTeam(Long teamId) {
         EntityManager em = emf.createEntityManager();
         try {
             em.getTransaction().begin();
-            TypedQuery<SportsTeam> query = em.createQuery("SELECT u FROM User u WHERE u.id = :id ", SportsTeam.class);
-            query.setParameter("id", userId);
+            TypedQuery<SportsTeam> query = em.createQuery("SELECT u FROM SportsTeam u WHERE u.id = :id ", SportsTeam.class);
+            query.setParameter("id", teamId);
             SportsTeam p = query.getSingleResult();
             em.remove(p);
             em.getTransaction().commit();
@@ -96,12 +95,12 @@ public class UserFacade {
         
     }
      
-    public List<SportsTeam> getAllUsers() {
+    public List<SportsTeam> getAllTeams() {
         EntityManager em = emf.createEntityManager();
         try {
-            List<SportsTeam> allUsers = em.createQuery("SELECT u.userName from User u", SportsTeam.class)
+            List<SportsTeam> allTeams = em.createQuery("SELECT u.teamName, u.description from SportsTeam u", SportsTeam.class)
             .getResultList();
-            return allUsers;
+            return allTeams;
         } finally {
             em.close();
         }
@@ -109,12 +108,12 @@ public class UserFacade {
     }
     
     
-    public String getUserAmount() {
+    public String getAmountOfTeams() {
        EntityManager em = emf.createEntityManager();;
         try {
-            TypedQuery<SportsTeam> query = em.createQuery ("select u from User u",entities.SportsTeam.class);
-            List<SportsTeam> users = query.getResultList();
-            return "[" + users.size() + "]";
+            TypedQuery<SportsTeam> query = em.createQuery ("select u from SportsTeam u",entities.SportsTeam.class);
+            List<SportsTeam> teams = query.getResultList();
+            return "[" + teams.size() + "]";
         } finally {
             em.close();
     
