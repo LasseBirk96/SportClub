@@ -155,6 +155,17 @@ public class SportsTeamResource {
     
     
     
+    @Path("aller")
+    @GET
+    @Produces({MediaType.APPLICATION_JSON})
+    public List<SportsTeam> getAlternativeTeams() {
+        List<SportsTeam> allTeams = SPORTSTEAM_FACADE.getAlternativeTeams();
+        return allTeams;
+    }
+    
+    
+    
+    
     }
     
     
