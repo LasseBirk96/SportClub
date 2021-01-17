@@ -51,7 +51,7 @@ public class SportsTeam implements Serializable {
     
     @JoinTable(name = "registeredTeams", joinColumns = {
     @JoinColumn(name = "id", referencedColumnName = "teamId")}, inverseJoinColumns = {
-    @JoinColumn(name = "teamSport", referencedColumnName = "sportName")})
+    @JoinColumn(name = "teamSport", referencedColumnName = "sportId")})
     @ManyToMany
     private List<Sport> sportList = new ArrayList<>();
      

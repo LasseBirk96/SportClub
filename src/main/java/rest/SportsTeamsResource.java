@@ -22,8 +22,8 @@ import javax.ws.rs.core.Response;
 import security.errorhandling.AuthenticationException;
 import utils.EMF_Creator;
 
-@Path("team")
-public class UserResource {
+@Path("SportsTeams")
+public class SportsTeamsResource {
 
     public static final int TOKEN_EXPIRE_TIME = 1000 * 60 * 30; //30 min
     private static final EntityManagerFactory EMF = EMF_Creator.createEntityManagerFactory();
@@ -33,7 +33,7 @@ public class UserResource {
     private UriInfo context;
 
     
-    public UserResource() {
+    public SportsTeamsResource() {
     }
 
     @POST
@@ -80,19 +80,29 @@ public class UserResource {
             JsonObject json = JsonParser.parseString(jsonString).getAsJsonObject();
             Long sportsTeamId = json.get("id").getAsLong();
             SportsTeam team = SPORTSTEAM_FACADE.findSportsTeam(sportsTeamId);
-            /*
-            if (json.has("email")) {
-                team.setEmail(json.get("email").getAsString());
+            
+            if (json.has("pricePerYear")) {
+                team.setPrice(json.get("pricePerYear").getAsDouble());
             }
             
-            if (json.has("username")) {
-                team.setUserName(json.get("username").getAsString());
+            if (json.has("teamName")) {
+                team.setTeamName(json.get("teamName").getAsString());
             }
             
-            USER_FACADE.updateUser(user);
-                   */ 
+             if (json.has("minAge")) {
+                team.setMinAge(json.get("minAge").getAsInt());
+            }
+            
+            if (json.has("maxAge")) {
+                team.setMaxAge(json.get("maxAge").getAsInt());
+            }
+            
+            
+            
+           SPORTSTEAM_FACADE.updateTeam(team);
+                    
             JsonObject responseJson = new JsonObject();
-            responseJson.addProperty("message", String.format("Successfully updated user %d", sportsTeamId));
+            responseJson.addProperty("message", String.format("Successfully updated team %d", sportsTeamId));
             return Response.ok(new Gson().toJson(responseJson)).build();
         }
         catch (Exception e) {
