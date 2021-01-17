@@ -48,12 +48,13 @@ public class UserResource {
            int minAge = json.get("minAge").getAsInt();
            int maxAge = json.get("maxAge").getAsInt();
            double price =json.get("price").getAsDouble();
+           Long id =json.get("id").getAsLong();
            
            
          
            
            
-          SportsTeam team = SPORTSTEAM_FACADE.addSportsTeam(teamName, minAge,maxAge, price);
+          SportsTeam team = SPORTSTEAM_FACADE.addSportsTeam(teamName, minAge,maxAge, price, id);
           
           
         JsonObject responseJson = new JsonObject();
@@ -73,7 +74,7 @@ public class UserResource {
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response updateUser(String jsonString) throws AuthenticationException, API_Exception {
+    public Response updateTeam(String jsonString) throws AuthenticationException, API_Exception {
         
         try {
             JsonObject json = JsonParser.parseString(jsonString).getAsJsonObject();

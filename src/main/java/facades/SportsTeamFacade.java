@@ -47,11 +47,15 @@ public class SportsTeamFacade {
     
     
 
-    public SportsTeam addSportsTeam(String teamName, int minAge, int maxAge, double price) throws AuthenticationException {
+    public SportsTeam addSportsTeam(String teamName, int minAge, int maxAge, double price, Long id) throws AuthenticationException {
         EntityManager em = emf.createEntityManager();
         SportsTeam team;
         try {
-                team = new SportsTeam(teamName, minAge, maxAge, price);
+            team = new SportsTeam(teamName, minAge, maxAge, price);
+           TypedQuery<Sport> query = em.createQuery("SELECT u FROM Sport u WHERE u.id = :id ", Sport.class);
+            query.setParameter("id", id);
+            Sport sport = query.getSingleResult();
+            team.addSport(em.find(Sport.class, sport));
                 em.getTransaction().begin();
                 em.persist(team);
                 em.getTransaction().commit();
@@ -98,7 +102,7 @@ public class SportsTeamFacade {
     public List<SportsTeam> getAllTeams() {
         EntityManager em = emf.createEntityManager();
         try {
-            List<SportsTeam> allTeams = em.createQuery("SELECT u.teamName, u.description from SportsTeam u", SportsTeam.class)
+            List<SportsTeam> allTeams = em.createQuery("SELECT u.teamName from SportsTeam u", SportsTeam.class)
             .getResultList();
             return allTeams;
         } finally {
