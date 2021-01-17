@@ -52,7 +52,7 @@ public class UserFacade {
         SportsTeam team;
         try {
                 team = new SportsTeam(teamName, minAge, maxAge, price);
-                team.addSport(em.find(Sport.class, "1"));
+                team.addSport(em.find(Sport.class, 1));
                 em.getTransaction().begin();
                 em.persist(team);
                 em.getTransaction().commit();
