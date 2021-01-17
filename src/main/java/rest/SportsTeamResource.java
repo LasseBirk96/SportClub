@@ -154,7 +154,7 @@ public class SportsTeamResource {
     }
     
     
-    
+    /*
     @Path("aller")
     @GET
     @Produces({MediaType.APPLICATION_JSON})
@@ -163,7 +163,7 @@ public class SportsTeamResource {
         return allTeams;
     }
     
-    
+    */
     
     
     }
