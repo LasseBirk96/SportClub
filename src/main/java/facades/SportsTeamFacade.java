@@ -104,7 +104,7 @@ public class SportsTeamFacade {
     public List<SportsTeam> getAllTeams() {
         EntityManager em = emf.createEntityManager();
         try {
-            List<SportsTeam> allTeams = em.createQuery("SELECT u.teamName, u.minAge, u.maxAge, u.price from SportsTeam u", SportsTeam.class)
+            List<SportsTeam> allTeams = em.createQuery("SELECT u.id, u.teamName, u.minAge, u.maxAge, u.price from SportsTeam u", SportsTeam.class)
             .getResultList();
             return allTeams;
         } finally {

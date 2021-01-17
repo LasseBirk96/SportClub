@@ -33,7 +33,7 @@ public class SportsFacade {
      public List<Sport> getAllSports() {
         EntityManager em = emf.createEntityManager();
         try {
-            List<Sport> allSports = em.createQuery("SELECT u.sportName, u.description from Sport u", Sport.class)
+            List<Sport> allSports = em.createQuery("SELECT u.id, u.sportName, u.description from Sport u", Sport.class)
             .getResultList();
             return allSports;
         } finally {
