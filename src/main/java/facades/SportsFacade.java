@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.TypedQuery;
+import security.errorhandling.AuthenticationException;
 
 /**
  *
@@ -53,8 +54,24 @@ public class SportsFacade {
     
         
     }
+        
+    }
+        
+        public Sport addSport(String sportName, String description) throws AuthenticationException {
+        EntityManager em = emf.createEntityManager();
+        Sport sport;
+        try {
+                sport = new Sport(sportName, description);
+                em.getTransaction().begin();
+                em.persist(sport);
+                em.getTransaction().commit();
+            
+        } finally {
+            em.close();
+        }
+        return sport;
+    }
     
 
    
-}
 }

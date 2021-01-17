@@ -23,7 +23,7 @@ import security.errorhandling.AuthenticationException;
 import utils.EMF_Creator;
 
 @Path("SportsTeams")
-public class SportsTeamsResource {
+public class SportsTeamResource {
 
     
     private static final EntityManagerFactory EMF = EMF_Creator.createEntityManagerFactory();
@@ -33,7 +33,7 @@ public class SportsTeamsResource {
     private UriInfo context;
 
     
-    public SportsTeamsResource() {
+    public SportsTeamResource() {
     }
 
     @POST
