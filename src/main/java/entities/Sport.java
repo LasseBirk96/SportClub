@@ -44,8 +44,9 @@ public class Sport implements Serializable {
     }
     
     
-    public Sport(String sportName) {
+    public Sport(String sportName, String description) {
         this.sportName = sportName;
+        this.description = description;
     }
 
     public String getSportName() {
@@ -63,6 +64,15 @@ public class Sport implements Serializable {
     public void setDescription(String description) {
         this.description = description;
     }
+    
+    
+     public List<SportsTeam> getSportTeamsList() {
+        return sportsTeamList;
+    }
+
+    public void setSportsTeamList(List<SportsTeam> sportsTeamList) {
+        this.sportsTeamList = sportsTeamList;
+    }   
 
   
 }
