@@ -119,7 +119,7 @@ public class SportsTeamFacade {
     public List<SportsTeam> getAlternativeTeams(){
           EntityManager em = emf.createEntityManager();
           try{
-              List<SportsTeam> allTeams = em.createQuery( "SELECT DISTINCT t FROM Sport s LEFT JOIN s.sportsTeamList t WHERE s = :sport", SportsTeam.class).getResultList();
+              List<SportsTeam> allTeams = em.createQuery( "SELECT DISTINCT t FROM Sport s LEFT JOIN s.sportsTeamList t WHERE s = SportsTeam t", SportsTeam.class).getResultList();
             return allTeams;
           } finally {
               em.close();
