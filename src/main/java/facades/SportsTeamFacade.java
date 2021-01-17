@@ -60,7 +60,7 @@ public class SportsTeamFacade {
         Sport sport = otherQuery.getSingleResult();
         
         team.addSport(sport);
-                em.merge(team);
+                em.persist(team);
         em.getTransaction().commit();
         
         return team;
