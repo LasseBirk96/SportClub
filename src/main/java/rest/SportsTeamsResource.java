@@ -25,7 +25,7 @@ import utils.EMF_Creator;
 @Path("SportsTeams")
 public class SportsTeamsResource {
 
-    public static final int TOKEN_EXPIRE_TIME = 1000 * 60 * 30; //30 min
+    
     private static final EntityManagerFactory EMF = EMF_Creator.createEntityManagerFactory();
     public static final SportsTeamFacade SPORTSTEAM_FACADE = SportsTeamFacade.getSportsTeamFacade(EMF);
 
@@ -49,21 +49,18 @@ public class SportsTeamsResource {
            int maxAge = json.get("maxAge").getAsInt();
            double price =json.get("price").getAsDouble();
            Long id =json.get("id").getAsLong();
+       
            
-           
-         
-           
-           
-          SportsTeam team = SPORTSTEAM_FACADE.addSportsTeam(teamName, minAge,maxAge, price, id);
+           SportsTeam team = SPORTSTEAM_FACADE.addSportsTeam(teamName, minAge,maxAge, price, id);
           
-          
-        JsonObject responseJson = new JsonObject();
-        responseJson.addProperty("teamName", teamName);
-        responseJson.addProperty("msg", "Welcome on board!");
-        return Response.ok(new Gson().toJson(responseJson)).build();
+
+            JsonObject responseJson = new JsonObject();
+            responseJson.addProperty("teamName", teamName);
+            responseJson.addProperty("msg", "Welcome on board!");
+            return Response.ok(new Gson().toJson(responseJson)).build();
         
         } catch (Exception e) {
-            throw new API_Exception("Malformed JSON Suplied", 400, e);
+          throw new API_Exception("Malformed JSON Suplied", 400, e);
         }
 
         
@@ -81,8 +78,8 @@ public class SportsTeamsResource {
             Long sportsTeamId = json.get("id").getAsLong();
             SportsTeam team = SPORTSTEAM_FACADE.findSportsTeam(sportsTeamId);
             
-            if (json.has("pricePerYear")) {
-                team.setPrice(json.get("pricePerYear").getAsDouble());
+            if (json.has("price")) {
+                team.setPrice(json.get("price").getAsDouble());
             }
             
             if (json.has("teamName")) {
@@ -99,8 +96,8 @@ public class SportsTeamsResource {
             
             
             
-           SPORTSTEAM_FACADE.updateTeam(team);
-                    
+            SPORTSTEAM_FACADE.updateTeam(team);
+
             JsonObject responseJson = new JsonObject();
             responseJson.addProperty("message", String.format("Successfully updated team %d", sportsTeamId));
             return Response.ok(new Gson().toJson(responseJson)).build();

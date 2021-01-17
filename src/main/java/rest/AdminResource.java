@@ -26,7 +26,7 @@ import utils.EMF_Creator;
 @Path("admin")
 public class AdminResource {
 
-    public static final int TOKEN_EXPIRE_TIME = 1000 * 60 * 30; //30 min
+    
     private static final EntityManagerFactory EMF = EMF_Creator.createEntityManagerFactory();
     public static final SportsTeamFacade USER_FACADE = SportsTeamFacade.getSportsTeamFacade(EMF);
     public static final AdminFacade ADMIN_FACADE = AdminFacade.getAdminFacade(EMF);
@@ -52,7 +52,7 @@ public class AdminResource {
         
            
 
-          Sport sport = ADMIN_FACADE.addSport(sportName, description);
+        Sport sport = ADMIN_FACADE.addSport(sportName, description);
           
           
         JsonObject responseJson = new JsonObject();
