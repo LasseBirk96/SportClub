@@ -42,7 +42,7 @@ public class SportsResource {
     }
     
     
-       @POST
+    @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response addSport(String jsonString) throws AuthenticationException, API_Exception {
@@ -54,6 +54,8 @@ public class SportsResource {
            String description = json.get("description").getAsString();
 
         
+           
+           
            
 
         Sport sport = SPORTS_FACADE.addSport(sportName, description);
@@ -89,6 +91,17 @@ public class SportsResource {
     public String amountOfSports() {
         String sportsAmount = SPORTS_FACADE.getAmountOfSports();
         return sportsAmount;
+    }
+    
+    
+    
+    
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("test")
+    public String test() {
+        
+        return "[]";
     }
     
     
